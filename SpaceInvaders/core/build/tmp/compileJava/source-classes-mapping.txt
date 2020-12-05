@@ -1,0 +1,20 @@
+com/mygdx/game/BarraDeVida.java
+ com.mygdx.game.BarraDeVida
+com/mygdx/game/Tiro.java
+ com.mygdx.game.Tiro
+com/mygdx/game/enemyShoot.java
+ com.mygdx.game.enemyShoot
+com/mygdx/game/NaveInimiga.java
+ com.mygdx.game.NaveInimiga
+com/mygdx/game/Colisao.java
+ com.mygdx.game.Colisao
+com/mygdx/game/Nave.java
+ com.mygdx.game.Nave
+com/mygdx/game/SpaceInvaders.java
+ com.mygdx.game.SpaceInvaders
+com/mygdx/game/Menu.java
+ com.mygdx.game.Menu
+com/mygdx/game/TelaJogo.java
+ com.mygdx.game.TelaJogo
+com/mygdx/game/GameOver.java
+ com.mygdx.game.GameOver
