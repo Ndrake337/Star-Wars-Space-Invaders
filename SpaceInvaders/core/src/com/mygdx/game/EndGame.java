@@ -11,10 +11,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
-public class GameOver implements Screen {
-    
+/**
+ *
+ * @author mathe
+ */
+public class EndGame implements Screen {
     SpaceInvaders game;
-    Nave xwing;
     Texture Logo;
     Texture PlayAgainButton1;
     Texture PlayAgainButton2;
@@ -23,21 +25,21 @@ public class GameOver implements Screen {
     Texture bg;
     
     BitmapFont scoreFont;
+    int score;
     
     private static final int EXIT_BUTTON_WIDTH = 300;
     private static final int EXIT_BUTTON_HEIGHT = 150;
     private static final int PLAY_BUTTON_WIDTH = 330;
     private static final int PLAY_BUTTON_HEIGHT = 150;
-
-    public GameOver(SpaceInvaders game, Nave xwing) {
-        this.game = game;
-        this.xwing = xwing;
-    }
     
+    public EndGame(SpaceInvaders game, int score) {
+        this.game = game;
+        this.score = score;
+    }
     @Override
     public void show() {
         this.game = game;
-        Logo = new Texture("game_over.png");
+        Logo = new Texture("Congrats.png");
         bg = new Texture("bg2.jpg");
         PlayAgainButton1 = new Texture("playAgain_button_1.png");
         PlayAgainButton2 = new Texture("playAgain_button_2.png");
@@ -59,7 +61,7 @@ public class GameOver implements Screen {
         if(Gdx.input.getX() < x + PLAY_BUTTON_WIDTH && Gdx.input.getX() > x && 600 - Gdx.input.getY()  < 150 + PLAY_BUTTON_HEIGHT && 600 - Gdx.input.getY() > 150){
             game.batch.draw(PlayAgainButton2, 100, 150,651,150);
             if(Gdx.input.isTouched()){
-                game.setScreen(new TelaJogo(game));
+                game.setScreen(new Menu(game));
             }           
         }
         else{
@@ -75,8 +77,7 @@ public class GameOver implements Screen {
         else{
             game.batch.draw(ExitButton1, 250, 25,300,150);
         }
-        
-        GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Sua Pontuação foi: " + xwing.score);
+        GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Sua Pontuação foi: " + this.score);
         scoreFont.draw(game.batch, scoreLayout, Gdx.graphics.getWidth()/2 - scoreLayout.width/2 , 400);
         
         game.batch.end();
@@ -96,5 +97,4 @@ public class GameOver implements Screen {
 
     @Override
     public void dispose() {}
-    
 }

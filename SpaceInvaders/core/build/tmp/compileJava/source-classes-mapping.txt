@@ -1,20 +1,30 @@
 com/mygdx/game/BarraDeVida.java
  com.mygdx.game.BarraDeVida
-com/mygdx/game/Tiro.java
- com.mygdx.game.Tiro
 com/mygdx/game/enemyShoot.java
  com.mygdx.game.enemyShoot
+com/mygdx/game/SpaceInvaders.java
+ com.mygdx.game.SpaceInvaders
+com/mygdx/game/BossShoot.java
+ com.mygdx.game.BossShoot
+com/mygdx/game/Nave.java
+ com.mygdx.game.Nave
+com/mygdx/game/Tiro.java
+ com.mygdx.game.Tiro
 com/mygdx/game/NaveInimiga.java
  com.mygdx.game.NaveInimiga
 com/mygdx/game/Colisao.java
  com.mygdx.game.Colisao
-com/mygdx/game/Nave.java
- com.mygdx.game.Nave
-com/mygdx/game/SpaceInvaders.java
- com.mygdx.game.SpaceInvaders
-com/mygdx/game/Menu.java
- com.mygdx.game.Menu
+com/mygdx/game/Boss.java
+ com.mygdx.game.Boss
 com/mygdx/game/TelaJogo.java
  com.mygdx.game.TelaJogo
 com/mygdx/game/GameOver.java
  com.mygdx.game.GameOver
+com/mygdx/game/Introscreen.java
+ com.mygdx.game.Introscreen
+com/mygdx/game/Menu.java
+ com.mygdx.game.Menu
+com/mygdx/game/EndGame.java
+ com.mygdx.game.EndGame
+com/mygdx/game/TelaBoss.java
+ com.mygdx.game.TelaBoss

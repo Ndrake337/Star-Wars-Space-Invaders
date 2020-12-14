@@ -11,7 +11,7 @@ public class SpaceInvaders extends Game {
         @Override
 	public void create () {
             batch = new SpriteBatch();
-            this.setScreen(new Menu(this));
+            this.setScreen(new Introscreen(this));
 	}
         
 	@Override

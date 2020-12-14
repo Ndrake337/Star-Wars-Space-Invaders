@@ -1,50 +1,46 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.mygdx.game;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import static com.badlogic.gdx.math.MathUtils.random;
 
 /**
  *
  * @author mathe
  */
-public class NaveInimiga {
+public class Boss {
+    
+    SpaceInvaders game;
     private static Texture texture;
-    public final float WIDTH; // largura da janela
-    public final float HEIGHT; // altura da janela
     Colisao colisor;
-
-    
     float x,y;
-    
     public int vidas;
-    
     public float Origin;
     public float Destiny;
-    
-    public boolean Limite = true;
-    
     public boolean remove = false;
-    
-    public NaveInimiga (float x,float y){
+    public boolean Limite = false;
+    public Boss (float x, float y, SpaceInvaders game){
         this.x = x;
         this.y = y;
         Origin = x;
         Destiny = x+10;
-        vidas = 2;
+        vidas = 18;
         if(texture == null){
-            texture = new Texture("Tie-Fighter.png");      
+            texture = new Texture("boss1.png");      
         }
-        WIDTH = 76.83f;
-        HEIGHT = 75.16f;
-        this.colisor = new Colisao(this.x, this.y, texture.getWidth()/6 , texture.getHeight()/6);
+        this.colisor = new Colisao(this.x, this.y, texture.getWidth() , texture.getHeight());
     }
     
     public void update(float deltaTime){
-        int speed = 3;
-        if(x== Destiny){
+        int speed = 8;
+        if(x== 674){
             Limite = false;  
         }
-        if(x==Origin){
+        if(x==0){
            Limite = true;
         }
         if(Limite == false){
@@ -54,21 +50,24 @@ public class NaveInimiga {
             x += deltaTime + speed;
         }
         
-        if(x<= Origin){
-            x = Origin;
+        if(x<= 0){
+            x = 0;
         }
-        if(x>= Destiny){
-            x = Destiny;
+        if(x>= 674){
+            x = 674;
         }
-        colisor.Move(x, y);
+        this.colisor.Move(x, y);
     }
     
     public void setRemove(){
         remove = true;
     }
-    
+    public void updateVidas(){
+        this.vidas -= 1;
+    }
+
     public void render (SpriteBatch batch){
-        batch.draw(texture,x,y,texture.getWidth()/6,texture.getHeight()/6);
+        batch.draw(texture,this.x,this.y);
     }
     
     public Colisao getColisor(){

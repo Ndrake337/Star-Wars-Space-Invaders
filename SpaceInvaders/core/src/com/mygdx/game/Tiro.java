@@ -1,6 +1,7 @@
 
 package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /*
@@ -17,6 +18,8 @@ public class Tiro {
     float x,y;
     
     public boolean remove = false;
+    
+    private Music explosionEffect;
     
     public Tiro (float x,float y){
         this.x=x;

@@ -5,19 +5,20 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 public class TelaJogo implements Screen{
         ArrayList<Tiro> tiros;
         ArrayList<NaveInimiga> inimigos;
         ArrayList<enemyShoot> tirosInimigos;
         private Nave xwing;
-        private NaveInimiga inimigo;
 	private Texture img;
         private Texture lifeBar;
 	private FPSLogger fpsGame;
-        private BarraDeVida XWingHealthBar;
         private TextureRegion imgRegion[];
         private int WIDTH; // largura da janela
         private int HEIGHT; // altura da janela
@@ -29,7 +30,10 @@ public class TelaJogo implements Screen{
         boolean criarInimigos = true;
         boolean Alternador = true;
         SpaceInvaders game;
-
+        
+        BitmapFont scoreFont;
+        
+        
         public TelaJogo(SpaceInvaders game) {
             this.game = game;
         }
@@ -39,7 +43,7 @@ public class TelaJogo implements Screen{
             WIDTH = Gdx.graphics.getWidth();
             HEIGHT = Gdx.graphics.getHeight();    
             fpsGame = new FPSLogger();
-	    xwing = new Nave(400,0);
+	    xwing = new Nave(400,0, 3);
             tiros = new ArrayList<Tiro>();
             lifeBar = new Texture("LifeBarl.png");
             imgRegion = new TextureRegion[4];
@@ -50,11 +54,11 @@ public class TelaJogo implements Screen{
             tirosInimigos = new ArrayList<enemyShoot>();
             inimigos = new ArrayList<NaveInimiga>();
             img = new Texture("bg2.jpg");
-            XWingHealthBar = new BarraDeVida(0, 0);
             shootTimer = 0;  
-            shootEnemyTimer = 0;  
+            shootEnemyTimer = 0;
+            scoreFont = new BitmapFont(Gdx.files.internal("fontes/score.fnt"));
 	}
-
+        
         @Override
 	public void render ( float f ) {              
                 fpsGame.log(); // apresenta o fps instantaneo da janela
@@ -106,12 +110,13 @@ public class TelaJogo implements Screen{
                 //Tiros dos Inimigos Basicos
                 ArrayList<NaveInimiga> inimigosMortos = new ArrayList<NaveInimiga>();
                 for(NaveInimiga enemy : inimigos ){
+                    enemy.update(delta);
                     enemy.render(game.batch);
                     //Tiros
                     shootEnemyTimer +=delta; 
                     if(shootEnemyTimer>=shootEnemyWaitTime){
                         shootEnemyTimer = 0;
-                        tirosInimigos.add(new enemyShoot(enemy.x-2,enemy.y-2));
+                        tirosInimigos.add(new enemyShoot(enemy.x-2 - enemy.WIDTH/2,enemy.y-2));
                     }
                     //Colisão entre nave e inimigos
                         if(xwing.getColisor().colideCom(enemy.getColisor())){
@@ -119,6 +124,7 @@ public class TelaJogo implements Screen{
                             enemy.vidas-=1;
                             if(enemy.vidas == 0 && xwing.vidas != 1){
                                 inimigosMortos.add(enemy);
+                                xwing.score += 100;
                             }
                         }
                    
@@ -154,6 +160,7 @@ public class TelaJogo implements Screen{
                         if(disparo.getColisor().colideCom(enemy.getColisor()) == true && enemy.vidas == 1){
                             inimigosMortos.add(enemy);
                             tirosRemovidos.add(disparo);
+                            xwing.score += 100;
                         }
                         else if(disparo.getColisor().colideCom(enemy.getColisor())== true && enemy.vidas > 1){
                             enemy.vidas -= 1;
@@ -173,9 +180,14 @@ public class TelaJogo implements Screen{
                 tiros.removeAll(tirosRemovidos);
                 
                 xwing.HealthBar.render(game.batch);
+                GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Pontos: " + xwing.score);
+                scoreFont.draw(game.batch, scoreLayout, Gdx.graphics.getWidth() - scoreLayout.width , scoreLayout.height);
                 
                 if(xwing.vidas == 0){
-                    game.setScreen(new GameOver(game));
+                    game.setScreen(new GameOver(game, xwing));
+                }
+                if(inimigos.size() == 0){
+                    game.setScreen(new TelaBoss(game, xwing));
                 }
                                 
                 game.batch.end();// finaliza a sequencia de desenho
